@@ -106,6 +106,7 @@ set(SAC_LIB_SRCS
     src/SimpleAmqpClient/BadUriException.h
     src/SimpleAmqpClient/ConnectionClosedException.h
     src/SimpleAmqpClient/ConsumerTagNotFoundException.h
+    src/SimpleAmqpClient/MessageRejectedException.h
 
     src/SimpleAmqpClient/Envelope.h
     src/Envelope.cpp
@@ -182,6 +183,7 @@ install(FILES
     src/SimpleAmqpClient/ConsumerTagNotFoundException.h
     src/SimpleAmqpClient/Envelope.h
     src/SimpleAmqpClient/MessageReturnedException.h
+    src/SimpleAmqpClient/MessageRejectedException.h
     src/SimpleAmqpClient/SimpleAmqpClient.h
     src/SimpleAmqpClient/Table.h
     src/SimpleAmqpClient/Util.h
