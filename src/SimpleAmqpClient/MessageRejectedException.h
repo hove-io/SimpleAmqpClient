@@ -1,4 +1,5 @@
-/* vim:set ft=cpp ts=4 sw=4 sts=4 et cindent: */
+#ifndef SIMPLEAMQPCLIENT_MESSAGEREJECTEDEXCEPTION_H
+#define SIMPLEAMQPCLIENT_MESSAGEREJECTEDEXCEPTION_H
 /*
  * ***** BEGIN LICENSE BLOCK *****
  * Version: MIT
@@ -27,35 +28,43 @@
  * ***** END LICENSE BLOCK *****
  */
 
-#include <SimpleAmqpClient.h>
+#include <boost/cstdint.hpp>
+#include <boost/lexical_cast.hpp>
+#include <stdexcept>
 
-#include <iostream>
-#include <stdlib.h>
+#include "SimpleAmqpClient/BasicMessage.h"
 
-using namespace AmqpClient;
-int main()
-{
-    char *szBroker = getenv("AMQP_BROKER");
-    Channel::ptr_t channel;
-    if (szBroker != NULL)
-        channel = Channel::Create(szBroker);
-    else
-        channel = Channel::Create();
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4251 4275)
+#endif
 
-    channel->DeclareQueue("alanqueue");
-    channel->BindQueue("alanqueue", "amq.direct", "alankey");
+/// @file SimpleAmqpClient/MessageReturnedException.h
+/// Defines AmqpClient::MessageReturnedException
 
-    BasicMessage::ptr_t msg_in = BasicMessage::Create();
+namespace AmqpClient {
 
-    msg_in->Body("This is a small message.");
+/// "Message rejected" exception
+class SIMPLEAMQPCLIENT_EXPORT MessageRejectedException
+    : public std::runtime_error {
+ public:
+  MessageRejectedException(uint64_t delivery_tag)
+      : std::runtime_error(
+            std::string("Message rejected: ")
+                .append(boost::lexical_cast<std::string>(delivery_tag))),
+        m_delivery_tag(delivery_tag) {}
 
-    channel->BasicPublish("amq.direct", "alankey", msg_in);
+  /// `delivery_tag` getter
+  uint64_t GetDeliveryTag() { return m_delivery_tag; }
 
-    channel->BasicConsume("alanqueue", "consumertag");
+ private:
+  uint64_t m_delivery_tag;
+};
 
-    BasicMessage::ptr_t msg_out = channel->BasicConsumeMessage("consumertag")->Message();
+}  // namespace AmqpClient
 
-    std::cout << "Message text: " << msg_out->Body() << std::endl;
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
-}
-
+#endif  // SIMPLEAMQPCLIENT_MESSAGEREJECTEDEXCEPTION_H

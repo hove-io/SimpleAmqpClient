@@ -1,6 +1,5 @@
-/* vim:set ft=cpp ts=4 sw=4 sts=4 et cindent: */
-#ifndef SIMPLEAMQPCLIENT_CONSUMERCANCELLEDEXCEPTION_H_
-#define SIMPLEAMQPCLIENT_CONSUMERCANCELLEDEXCEPTION_H_
+#ifndef SIMPLEAMQPCLIENT_CONSUMERCANCELLEDEXCEPTION_H
+#define SIMPLEAMQPCLIENT_CONSUMERCANCELLEDEXCEPTION_H
 /*
  * ***** BEGIN LICENSE BLOCK *****
  * Version: MIT
@@ -32,23 +31,37 @@
 #include <stdexcept>
 #include <string>
 
-namespace AmqpClient
-{
+#include "SimpleAmqpClient/Util.h"
 
-class ConsumerCancelledException : public std::runtime_error
-{
-public:
-    explicit ConsumerCancelledException(const std::string &consumer_tag) throw() :
-        std::runtime_error(std::string("Consumer was cancelled: ").append(consumer_tag))
-      , m_consumer_tag(consumer_tag)
-    {}
+/// @file SimpleAmqpClient/ConsumerCancelledException.h
+/// Defines AmqpClient::ConsumerCancelledException
 
-    virtual ~ConsumerCancelledException() throw() {}
+namespace AmqpClient {
 
-    std::string GetConsumerTag() const { return m_consumer_tag; }
+/**
+ * "Consumer was cancelled" exception
+ *
+ * Happens when the server ends a consumer subscription, e.g. when the
+ * subscribed queue is being deleted, or when a client issues basic.cancel
+ * request.
+ */
+class SIMPLEAMQPCLIENT_EXPORT ConsumerCancelledException
+    : public std::runtime_error {
+ public:
+  /// Constructor
+  explicit ConsumerCancelledException(const std::string &consumer_tag) throw()
+      : std::runtime_error(
+            std::string("Consumer was cancelled: ").append(consumer_tag)),
+        m_consumer_tag(consumer_tag) {}
 
-private:
-    std::string m_consumer_tag;
+  /// Destructor
+  virtual ~ConsumerCancelledException() throw() {}
+
+  /// Getter of the consumer tag
+  std::string GetConsumerTag() const { return m_consumer_tag; }
+
+ private:
+  std::string m_consumer_tag;
 };
-} // namespace AmqpClient
-#endif /* SIMPLEAMQPCLIENT_CONSUMERCANCELLEDEXCEPTION_H_ */
+}  // namespace AmqpClient
+#endif  // SIMPLEAMQPCLIENT_CONSUMERCANCELLEDEXCEPTION_H

@@ -1,6 +1,5 @@
-/* vim:set ft=cpp ts=4 sw=4 sts=4 et cindent: */
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef SIMPLEAMQPCLIENT_UTIL_H
+#define SIMPLEAMQPCLIENT_UTIL_H
 /*
  * ***** BEGIN LICENSE BLOCK *****
  * Version: MIT
@@ -30,13 +29,21 @@
  */
 
 #ifdef WIN32
-# ifdef SimpleAmqpClient_EXPORTS
-#  define SIMPLEAMQPCLIENT_EXPORT __declspec(dllexport)
-# else
-#  define SIMPLEAMQPCLIENT_EXPORT __declspec(dllimport)
-# endif
+#ifdef SimpleAmqpClient_EXPORTS
+#define SIMPLEAMQPCLIENT_EXPORT __declspec(dllexport)
 #else
-# define SIMPLEAMQPCLIENT_EXPORT
+#define SIMPLEAMQPCLIENT_EXPORT __declspec(dllimport)
+#endif
+#else
+#define SIMPLEAMQPCLIENT_EXPORT
 #endif
 
-#endif // UTIL_H
+#if defined(__GNUC__) || defined(__clang__)
+#define SAC_DEPRECATED(msg) __attribute__((deprecated(msg)))
+#elif defined(_MSC_VER)
+#define SAC_DEPRECATED(msg) __declspec(deprecated(msg))
+#else
+#define SAC_DEPRECATED(msg)
+#endif
+
+#endif  // SIMPLEAMQPCLIENT_UTIL_H

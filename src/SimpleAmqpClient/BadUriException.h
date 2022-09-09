@@ -1,6 +1,5 @@
-/* vim:set ft=cpp ts=4 sw=4 sts=4 et cindent: */
-#ifndef BAD_URI_EXCEPTION_H
-#define BAD_URI_EXCEPTION_H
+#ifndef SIMPLEAMQPCLIENT_BADURIEXCEPTION_H
+#define SIMPLEAMQPCLIENT_BADURIEXCEPTION_H
 /*
  * ***** BEGIN LICENSE BLOCK *****
  * Version: MIT
@@ -31,14 +30,17 @@
 
 #include <stdexcept>
 
-namespace AmqpClient
-{
+#include "SimpleAmqpClient/Util.h"
 
-class BadUriException : public std::runtime_error
-{
-public:
-    explicit BadUriException() :
-        std::runtime_error("URI is malformed") {}
+/// @file SimpleAmqpClient/BadUriException.h
+/// Defines AmqpClient::BadUriException
+
+namespace AmqpClient {
+
+/** "URI is malformed" exception */
+class SIMPLEAMQPCLIENT_EXPORT BadUriException : public std::runtime_error {
+ public:
+  explicit BadUriException() : std::runtime_error("URI is malformed") {}
 };
-} // namespace AmqpClient
-#endif // BAD_URI_EXCEPTION_H
+}  // namespace AmqpClient
+#endif  // SIMPLEAMQPCLIENT_BADURIEXCEPTION_H

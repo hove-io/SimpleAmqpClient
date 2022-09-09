@@ -1,6 +1,5 @@
-/* vim:set ft=cpp ts=4 sw=4 sts=4 et cindent: */
-#ifndef SIMPLEAMQPCLIENT_H
-#define SIMPLEAMQPCLIENT_H
+#ifndef SIMPLEAMQPCLIENT_SIMPLEAMQPCLIENT_H
+#define SIMPLEAMQPCLIENT_SIMPLEAMQPCLIENT_H
 /*
  * ***** BEGIN LICENSE BLOCK *****
  * Version: MIT
@@ -29,15 +28,22 @@
  * ***** END LICENSE BLOCK *****
  */
 
-#include "SimpleAmqpClient/Channel.h"
-#include "SimpleAmqpClient/Envelope.h"
-#include "SimpleAmqpClient/BasicMessage.h"
+/// @file SimpleAmqpClient/SimpleAmqpClient.h
+/// This "include all" header file re-exports all of SimpleAmqpClient public API
+
 #include "SimpleAmqpClient/AmqpException.h"
+#include "SimpleAmqpClient/AmqpLibraryException.h"
 #include "SimpleAmqpClient/AmqpResponseLibraryException.h"
+#include "SimpleAmqpClient/BadUriException.h"
+#include "SimpleAmqpClient/BasicMessage.h"
+#include "SimpleAmqpClient/Channel.h"
 #include "SimpleAmqpClient/ConnectionClosedException.h"
 #include "SimpleAmqpClient/ConsumerCancelledException.h"
 #include "SimpleAmqpClient/ConsumerTagNotFoundException.h"
+#include "SimpleAmqpClient/Envelope.h"
+#include "SimpleAmqpClient/MessageRejectedException.h"
 #include "SimpleAmqpClient/MessageReturnedException.h"
+#include "SimpleAmqpClient/Table.h"
 #include "SimpleAmqpClient/Version.h"
 
-#endif // SIMPLEAMQPCLIENT_H
+#endif  // SIMPLEAMQPCLIENT_SIMPLEAMQPCLIENT_H

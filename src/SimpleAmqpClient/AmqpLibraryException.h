@@ -1,6 +1,5 @@
-/* vim:set ft=cpp ts=4 sw=4 sts=4 et cindent: */
-#ifndef AMQPLIBRARYEXCEPTION_H
-#define AMQPLIBRARYEXCEPTION_H
+#ifndef SIMPLEAMQPCLIENT_AMQPLIBRARYEXCEPTION_H
+#define SIMPLEAMQPCLIENT_AMQPLIBRARYEXCEPTION_H
 /*
  * ***** BEGIN LICENSE BLOCK *****
  * Version: MIT
@@ -29,43 +28,57 @@
  * ***** END LICENSE BLOCK *****
  */
 
-#include "SimpleAmqpClient/Util.h"
-
 #include <stdexcept>
 #include <string>
 
+#include "SimpleAmqpClient/Util.h"
+
 #ifdef _MSC_VER
-# pragma warning ( push )
-# pragma warning ( disable: 4251 4275 )
+#pragma warning(push)
+#pragma warning(disable : 4251 4275)
 #endif
+
+/// @file SimpleAmqpClient/AmqpLibraryException.h
+/// Defines SimpleAmqpClient::AmqpLibraryException
 
 struct amqp_rpc_reply_t_;
 
-namespace AmqpClient
-{
+namespace AmqpClient {
 
-class SIMPLEAMQPCLIENT_EXPORT AmqpLibraryException : public std::runtime_error
-{
-public:
- static AmqpLibraryException CreateException(int error_code);
- static AmqpLibraryException CreateException(int error_code,
-                                             const std::string &context);
+/**
+ * Errors arising from incorrect usage of this library APIs
+ */
+class SIMPLEAMQPCLIENT_EXPORT AmqpLibraryException : public std::runtime_error {
+ public:
+  /**
+   * Factory-construct with an error code
+   */
+  static AmqpLibraryException CreateException(int error_code);
+  /**
+   * Factory-construct with an error code and a string context
+   */
+  static AmqpLibraryException CreateException(int error_code,
+                                              const std::string &context);
 
-    int ErrorCode() const { return m_errorCode; }
+  /**
+   * Error code getter
+   */
+  int ErrorCode() const { return m_errorCode; }
 
-protected:
- explicit AmqpLibraryException(const std::string &message,
-                               int error_code) throw();
+ protected:
+  /** @cond INTERNAL */
+  explicit AmqpLibraryException(const std::string &message,
+                                int error_code) throw();
+  /** @endcond@ */
 
-private:
-    int m_errorCode;
+ private:
+  int m_errorCode;
 };
 
-} // namespace AmqpClient
+}  // namespace AmqpClient
 
 #ifdef _MSC_VER
-# pragma warning ( pop )
+#pragma warning(pop)
 #endif
 
-#endif // AMQPLIBRARYEXCEPTION_H
-
+#endif  // SIMPLEAMQPCLIENT_AMQPLIBRARYEXCEPTION_H
